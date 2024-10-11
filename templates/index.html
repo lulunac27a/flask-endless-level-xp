@@ -1,15 +1,19 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-    <head>
-        <title>Flask User Level XP System</title>
-    </head>
-    <body>
-        <h1>Flask User Level XP System</h1>
-        <ul>
-            {{ user.username }}:<br>
-            Level {{ user.level }}<br>
-            {{ user.xp }} / {{ user.xp_required }} XP<br>
-            <button onclick="location.href='{{ url_for('add_xp', user_id=user.id, amount=1) }}'">Add XP</button>
-        </ul>
-    </body>
+  <head>
+    <title>Flask User Level XP System</title>
+  </head>
+  <body>
+    <h1>Flask User Level XP System</h1>
+    <ul>
+      {{ user.username }}:<br />
+      Level {{ user.level }}<br />
+      {{ user.xp }} / {{ user.xp_required }} XP<br />
+      <button
+        onclick="location.href='{{ url_for('add_xp', user_id=user.id, amount=1) }}'"
+      >
+        Add XP
+      </button>
+    </ul>
+  </body>
 </html>
