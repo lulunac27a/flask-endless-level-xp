@@ -9,6 +9,7 @@
       {{ user.username }}:<br />
       Level {{ user.level }}<br />
       {{ user.xp }} / {{ user.xp_required }} XP<br />
+      <progress value="{{ user.xp }}" max="{{ user.xp_required }}"></progress>
       <button
         onclick="location.href='{{ url_for('add_xp', user_id=user.id, amount=1) }}'"
       >
