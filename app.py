@@ -36,6 +36,12 @@ class User(db.Model):
             )
             self.level += 1
 
+    def get_xp_required(self):
+        """
+        Get the required XP for the user to level up.
+        """
+        return self.xp_required
+
 
 @app.route("/")
 def index():
