@@ -42,6 +42,12 @@ class User(db.Model):
         """
         return self.xp_required
 
+    def get_level_progress(self):
+        """
+        Get the level progress as a percentage.
+        """
+        return (self.xp / self.xp_required) * 100
+
 
 @app.route("/")
 def index():

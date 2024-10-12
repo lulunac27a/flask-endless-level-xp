@@ -9,12 +9,18 @@
     <ul>
       {{ user.username }}:<br />
       Level {{ user.level }}<br />
-      {{ user.xp }} / {{ user.xp_required }} XP<br />
-      <progress value="{{ user.xp }}" max="{{ user.xp_required }}"></progress>
+      {{ user.xp | round }} / {{ user.get_xp_required() | round }} XP<br />
+      <progress
+        value="{{ user.xp | round }}"
+        max="{{ user.get_xp_required() | round }}"
+      >
+        {{ user.get_level_progress() | round(2) }}%
+      </progress>
       <form
         action="{{ url_for('add_xp', user_id=user.id, amount=1) }}"
         method="post"
       >
+        <input type="hidden" name="amount" value="1" />
         <button type="submit">Add XP</button>
       </form>
     </ul>
