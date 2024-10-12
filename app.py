@@ -52,7 +52,7 @@ def index():
     return render_template("index.html", user=user)
 
 
-@app.route("/add_xp/<float:amount>")
+@app.route("/add_xp/<float:amount>", methods=["POST"])
 def add_xp(amount):
     """
     Add XP (experience points) based on entered amount.
