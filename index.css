@@ -1,0 +1,8 @@
+* {
+    font-family: system-ui,  Arial, Helvetica, sans-serif;
+    line-height: 125%;
+}
+progress {
+    height: 20px;
+    padding: 5px;
+}
