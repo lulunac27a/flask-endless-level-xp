@@ -15,11 +15,11 @@
       {{ user.xp | round }} / {{ user.get_xp_required() | round }} XP<br />
       <div class="progress-container">
         <progress
-          value="{{ user.xp | round }}"
-          max="{{ user.get_xp_required() | round }}"
+          value="{{ user.xp | short_numeric }}"
+          max="{{ user.get_xp_required() | short_numeric }}"
         ></progress>
         <div class="progress-text">
-          {{ user.get_level_progress() | round(2) }}%
+          {{ user.get_level_progress() | short_numeric }}%
         </div>
       </div>
       <form

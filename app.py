@@ -49,6 +49,21 @@ class User(db.Model):
         return (self.xp / self.xp_required) * 100
 
 
+@app.template_filter("short_numeric")
+def short_numeric_filter(value):
+    if value < 1000:
+        return "{:.0f}".format(value)
+    elif value < 1000000:
+        return "{:.1f}K".format(value / 1000)
+    elif value < 1000000000:
+        return "{:.1f}M".format(value / 1000000)
+    else:
+        return "{:.1f}B".format(value / 1000000000)
+
+
+app.jinja_env.filters["short_numeric"] = short_numeric_filter
+
+
 @app.route("/")
 def index():
     """
