@@ -1,23 +1,34 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-    <head>
-        <title>Flask User Level XP System</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
-    </head>
-    <body>
-        <h1>Flask User Level XP System</h1>
-        <ul>
-            {{ user.username }}:<br>
-            Level {{ user.level }}<br>
-            {{ user.xp | round }} / {{ user.get_xp_required() | round }} XP<br>
-            <div class="progress-container">
-                <progress value="{{ user.xp | round }}" max="{{ user.get_xp_required() | round }}"></progress>
-                <div class="progress-text">{{ user.get_level_progress() | round(2) }}%</div>
-            </div>
-            <form action="{{ url_for('add_xp', user_id=user.id, amount=1) }}" method="post">
-                <input type="hidden" name="amount" value="1">
-                <button type="submit">Add XP</button>
-            </form>
-        </ul>
-    </body>
+  <head>
+    <title>Flask User Level XP System</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/index.css') }}"
+    />
+  </head>
+  <body>
+    <h1>Flask User Level XP System</h1>
+    <ul>
+      {{ user.username }}:<br />
+      Level {{ user.level }}<br />
+      {{ user.xp | round }} / {{ user.get_xp_required() | round }} XP<br />
+      <div class="progress-container">
+        <progress
+          value="{{ user.xp | round }}"
+          max="{{ user.get_xp_required() | round }}"
+        ></progress>
+        <div class="progress-text">
+          {{ user.get_level_progress() | round(2) }}%
+        </div>
+      </div>
+      <form
+        action="{{ url_for('add_xp', user_id=user.id, amount=1) }}"
+        method="post"
+      >
+        <input type="hidden" name="amount" value="1" />
+        <button type="submit">Add XP</button>
+      </form>
+    </ul>
+  </body>
 </html>
