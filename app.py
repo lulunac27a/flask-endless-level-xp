@@ -78,12 +78,12 @@ def short_numeric_filter(value):
         "ND",
         "V",
     ]
-    i = 0
+    exponent = 0
     mantissa = value
     while mantissa >= 1000:
         mantissa /= 1000
-        i += 1
-    return f"{mantissa:.3g}{units[i]}" if value >= 1000 else f"{value:.0f}"
+        exponent += 1
+    return f"{mantissa:.3g}{units[exponent]}" if value >= 1000 else f"{value:.0f}"
 
 
 app.jinja_env.filters["short_numeric"] = short_numeric_filter
