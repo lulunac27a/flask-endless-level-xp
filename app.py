@@ -54,15 +54,36 @@ def short_numeric_filter(value):
     """
     Get the abbreviated numeric value.
     """
-    if value < 1000:
-        return f"{value:.0f}"
-    if value < 1000000:
-        return f"{value / 1000:.1f}K"
-    if value < 1000000000:
-        return f"{value / 1000000:.1f}M"
-    if value < 1000000000000:
-        return f"{value / 1000000000:.1f}B"
-    return f"{value / 1000000000000:.1f}T"
+    units = [
+        "",
+        "K",
+        "M",
+        "B",
+        "T",
+        "Qa",
+        "Qi",
+        "Sx",
+        "Sp",
+        "O",
+        "N",
+        "D",
+        "UD",
+        "DD",
+        "TD",
+        "QaD",
+        "QiD",
+        "SxD",
+        "SpD",
+        "OD",
+        "ND",
+        "V",
+    ]
+    i = 0
+    mantissa = value
+    while mantissa >= 1000:
+        mantissa /= 1000
+        i += 1
+    return f"{mantissa:.3g}{units[i]}" if value >= 1000 else f"{value:.0f}"
 
 
 app.jinja_env.filters["short_numeric"] = short_numeric_filter
