@@ -60,8 +60,7 @@ def short_numeric_filter(value):
         return f"{value / 1000:.1f}K"
     elif value < 1000000000:
         return f"{value / 1000000:.1f}M"
-    else:
-        return f"{value / 1000000000:.1f}B"
+    return f"{value / 1000000000:.1f}B"
 
 
 app.jinja_env.filters["short_numeric"] = short_numeric_filter
