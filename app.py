@@ -56,9 +56,9 @@ def short_numeric_filter(value):
     """
     if value < 1000:
         return f"{value:.0f}"
-    elif value < 1000000:
+    if value < 1000000:
         return f"{value / 1000:.1f}K"
-    elif value < 1000000000:
+    if value < 1000000000:
         return f"{value / 1000000:.1f}M"
     return f"{value / 1000000000:.1f}B"
 
