@@ -12,11 +12,12 @@
     <ul>
       {{ user.username }}:<br />
       Level {{ user.level }}<br />
-      {{ user.xp | round }} / {{ user.get_xp_required() | round }} XP<br />
+      {{ user.xp | short_numeric }} / {{ user.get_xp_required() | short_numeric
+      }} XP<br />
       <div class="progress-container">
         <progress
-          value="{{ user.xp | short_numeric }}"
-          max="{{ user.get_xp_required() | short_numeric }}"
+          value="{{ user.xp }}"
+          max="{{ user.get_xp_required() }}"
         ></progress>
         <div class="progress-text">
           {{ user.get_level_progress() | short_numeric }}%

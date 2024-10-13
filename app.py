@@ -51,14 +51,17 @@ class User(db.Model):
 
 @app.template_filter("short_numeric")
 def short_numeric_filter(value):
+    """
+    Get the abbreviated numeric value.
+    """
     if value < 1000:
-        return "{:.0f}".format(value)
+        return f"{value:.0f}"
     elif value < 1000000:
-        return "{:.1f}K".format(value / 1000)
+        return f"{value / 1000:.1f}K"
     elif value < 1000000000:
-        return "{:.1f}M".format(value / 1000000)
+        return f"{value / 1000000:.1f}M"
     else:
-        return "{:.1f}B".format(value / 1000000000)
+        return f"{value / 1000000000:.1f}B"
 
 
 app.jinja_env.filters["short_numeric"] = short_numeric_filter
