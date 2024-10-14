@@ -26,6 +26,7 @@ class User(db.Model):  # user class
     def add_xp(self, amount):  # add XP
         """
         Add XP (experience points) to the user.
+        amount - the amount to add XP.
         """
         self.xp += amount  # add XP by amount
         self.total_xp += amount  # add total XP by amount
@@ -55,6 +56,7 @@ class User(db.Model):  # user class
 def short_numeric_filter(value):  # get number in short numeric form with abbreviations
     """
     Get the abbreviated numeric value.
+    value - the numeric value to convert.
     """
     units = [
         "",
