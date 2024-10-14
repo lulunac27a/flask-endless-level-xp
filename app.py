@@ -79,7 +79,7 @@ def short_numeric_filter(value):  # get number in short numeric form with abbrev
         "OD",
         "ND",
         "V",
-    ]  # list of units
+    ]  # list of units with abbreviations
     exponent = 0
     mantissa = value  # mantissa value from 1 to 999
     while mantissa >= 1000:  # repeat until mantissa is within 1 to 999
@@ -109,7 +109,7 @@ def add_xp():  # add XP
     """
     user = User.query.first()  # get first user
     user.add_xp(float(request.form["amount"]))  # parse amount as float
-    db.session.commit()  # commit database
+    db.session.commit()  # commit database changes
     return redirect(url_for("index"))  # return index page template
 
 
@@ -121,8 +121,8 @@ def init_db():  # initialize database
         db.create_all()  # initialize database
         if User.query.count() == 0:  # if there is no user in database
             new_user = User(username="Player")  # add user with name 'Player'
-            db.session.add(new_user)
-            db.session.commit()
+            db.session.add(new_user)  # add new user to database
+            db.session.commit()  # commit database changes
 
 
 if __name__ == "__main__":
