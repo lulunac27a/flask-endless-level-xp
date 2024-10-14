@@ -11,46 +11,48 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
 db = SQLAlchemy(app)
 
 
-class User(db.Model):
+class User(db.Model):  # user class
     """
     A user model to store the level and experience points (XP).
     """
 
-    id = db.Column(db.Integer, primary_key=True, unique=True, nullable=False)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    xp = db.Column(db.Float, default=0)
-    xp_required = db.Column(db.Float, default=1)
-    total_xp = db.Column(db.Float, default=0)
-    level = db.Column(db.Integer, default=1)
+    id = db.Column(db.Integer, primary_key=True, unique=True, nullable=False)  # user id
+    username = db.Column(db.String(80), unique=True, nullable=False)  # username
+    xp = db.Column(db.Float, default=0)  # user XP
+    xp_required = db.Column(db.Float, default=1)  # user XP required
+    total_xp = db.Column(db.Float, default=0)  # user total XP
+    level = db.Column(db.Integer, default=1)  # user level
 
-    def add_xp(self, amount):
+    def add_xp(self, amount):  # add XP
         """
         Add XP (experience points) to the user.
         """
-        self.xp += amount
-        self.total_xp += amount
-        while self.xp >= self.xp_required:
+        self.xp += amount  # add XP by amount
+        self.total_xp += amount  # add total XP by amount
+        while (
+            self.xp >= self.xp_required
+        ):  # if user XP is greater than or equal to XP required
             self.xp -= self.xp_required
             self.xp_required = round(
                 self.xp_required + self.xp_required * 1 / math.sqrt(self.level)
             )
-            self.level += 1
+            self.level += 1  # increase level
 
-    def get_xp_required(self):
+    def get_xp_required(self):  # get required XP to next level
         """
         Get the required XP for the user to level up.
         """
         return self.xp_required
 
-    def get_level_progress(self):
+    def get_level_progress(self):  # get level progress
         """
         Get the level progress as a percentage.
         """
         return (self.xp / self.xp_required) * 100
 
 
-@app.template_filter("short_numeric")
-def short_numeric_filter(value):
+@app.template_filter("short_numeric")  # short numeric filter
+def short_numeric_filter(value):  # get number in short numeric form with abbreviations
     """
     Get the abbreviated numeric value.
     """
@@ -77,50 +79,52 @@ def short_numeric_filter(value):
         "OD",
         "ND",
         "V",
-    ]
+    ]  # list of units
     exponent = 0
-    mantissa = value
-    while mantissa >= 1000:
+    mantissa = value  # mantissa value from 1 to 999
+    while mantissa >= 1000:  # repeat until mantissa is within 1 to 999
         mantissa /= 1000
         exponent += 1
-    return f"{mantissa:.3g}{units[exponent]}" if value >= 1000 else f"{value:.0f}"
+    return (
+        f"{mantissa:.3g}{units[exponent]}" if value >= 1000 else f"{value:.0f}"
+    )  # print abbreviated output
 
 
-app.jinja_env.filters["short_numeric"] = short_numeric_filter
+app.jinja_env.filters["short_numeric"] = short_numeric_filter  # add filter to Jinja
 
 
-@app.route("/")
-def index():
+@app.route("/")  # index page
+def index():  # get index page template
     """
     Return the index page containing a user.
     """
-    user = User.query.first()
-    return render_template("index.html", user=user)
+    user = User.query.first()  # get first user
+    return render_template("index.html", user=user)  # return index page template
 
 
-@app.route("/add_xp", methods=["POST"])
-def add_xp():
+@app.route("/add_xp", methods=["POST"])  # add XP from POST method
+def add_xp():  # add XP
     """
     Add XP (experience points) based on entered amount.
     """
-    user = User.query.first()
-    user.add_xp(float(request.form["amount"]))
-    db.session.commit()
-    return redirect(url_for("index"))
+    user = User.query.first()  # get first user
+    user.add_xp(float(request.form["amount"]))  # parse amount as float
+    db.session.commit()  # commit database
+    return redirect(url_for("index"))  # return index page template
 
 
-def init_db():
+def init_db():  # initialize database
     """
     Initialize the user database.
     """
     with app.app_context():
-        db.create_all()
-        if User.query.count() == 0:
-            new_user = User(username="Player")
+        db.create_all()  # initialize database
+        if User.query.count() == 0:  # if there is no user in database
+            new_user = User(username="Player")  # add user with name 'Player'
             db.session.add(new_user)
             db.session.commit()
 
 
 if __name__ == "__main__":
     init_db()
-    app.run(debug=True, port=8081)
+    app.run(debug=True, port=8081)  # run the app at post 8081
