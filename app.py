@@ -33,6 +33,9 @@ class User(db.Model):  # user class
         self.check_level_up()  # check if user has leveled up
 
     def check_level_up(self):  # check if user has leveled up
+        """
+        Check if the user has leveled up.
+        """
         while (
             self.xp >= self.xp_required
         ):  # if user XP is greater than or equal to XP required
