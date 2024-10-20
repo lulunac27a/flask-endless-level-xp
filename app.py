@@ -30,6 +30,9 @@ class User(db.Model):  # user class
         """
         self.xp += amount  # add XP by amount
         self.total_xp += amount  # add total XP by amount
+        self.check_level_up()  # check if user has leveled up
+
+    def check_level_up(self):  # check if user has leveled up
         while (
             self.xp >= self.xp_required
         ):  # if user XP is greater than or equal to XP required
