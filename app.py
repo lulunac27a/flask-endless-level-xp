@@ -20,10 +20,11 @@ class User(db.Model):  # user class
                    unique=True, nullable=False)  # user id
     username = db.Column(db.String(80), unique=True,
                          nullable=False)  # username
-    xp = db.Column(db.Float, default=0)  # user XP
-    xp_required = db.Column(db.Float, default=1)  # user XP required
-    total_xp = db.Column(db.Float, default=0)  # user total XP
-    level = db.Column(db.Integer, default=1)  # user level
+    xp = db.Column(db.Float, default=0, nullable=False)  # user XP
+    xp_required = db.Column(db.Float, default=1,
+                            nullable=False)  # user XP required
+    total_xp = db.Column(db.Float, default=0, nullable=False)  # user total XP
+    level = db.Column(db.Integer, default=1, nullable=False)  # user level
 
     def add_xp(self, amount):  # add XP
         """
