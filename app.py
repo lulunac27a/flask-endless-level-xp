@@ -16,8 +16,10 @@ class User(db.Model):  # user class
     A user model to store the level and experience points (XP).
     """
 
-    id = db.Column(db.Integer, primary_key=True, unique=True, nullable=False)  # user id
-    username = db.Column(db.String(80), unique=True, nullable=False)  # username
+    id = db.Column(db.Integer, primary_key=True,
+                   unique=True, nullable=False)  # user id
+    username = db.Column(db.String(80), unique=True,
+                         nullable=False)  # username
     xp = db.Column(db.Float, default=0)  # user XP
     xp_required = db.Column(db.Float, default=1)  # user XP required
     total_xp = db.Column(db.Float, default=0)  # user total XP
@@ -59,7 +61,8 @@ class User(db.Model):  # user class
 
 
 @app.template_filter("short_numeric")  # short numeric filter
-def short_numeric_filter(value):  # get number in short numeric form with abbreviations
+# get number in short numeric form with abbreviations
+def short_numeric_filter(value):
     """
     Get the abbreviated numeric value.
     value - the numeric value to convert.
@@ -98,7 +101,8 @@ def short_numeric_filter(value):  # get number in short numeric form with abbrev
     )  # print abbreviated output
 
 
-app.jinja_env.filters["short_numeric"] = short_numeric_filter  # add filter to Jinja
+# add filter to Jinja
+app.jinja_env.filters["short_numeric"] = short_numeric_filter
 
 
 @app.route("/")  # index page
@@ -107,7 +111,8 @@ def index():  # get index page template
     Return the index page containing a user.
     """
     user = User.query.first()  # get first user
-    return render_template("index.html", user=user)  # redirect to index page template
+    # redirect to index page template
+    return render_template("index.html", user=user)
 
 
 @app.route("/add_xp", methods=["POST"])  # add XP from POST method
