@@ -133,9 +133,9 @@ def init_db():  # initialize database
     """
     with app.app_context():
         db.create_all()  # create tables if they don't exist
-        if User.query.count() == 0:  # if there is no user in database
+        if User.query.count() == 0:  # if there is no user in the database
             new_user = User(username="Player")  # add user with name 'Player'
-            db.session.add(new_user)  # add new user to database
+            db.session.add(new_user)  # add new user to the database
             db.session.commit()  # commit database changes
 
 
