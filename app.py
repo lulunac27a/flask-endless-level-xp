@@ -43,9 +43,13 @@ class User(db.Model):  # user class
             self.xp >= self.xp_required
         ):  # if user XP is greater than or equal to XP required
             self.xp -= self.xp_required
-            self.xp_required = round(
-                self.xp_required + self.xp_required * 1 / math.sqrt(self.level)
-            )  # increase XP required exponentially with slower growth at higher levels
+            self.xp_required = max(
+                1.0,
+                round(
+                    self.xp_required
+                    + max(1.0, self.xp_required * 1.0 / math.sqrt(self.level))
+                ),
+            )
             self.level += 1  # increase level
 
     def get_xp_required(self):  # get required XP to next level
