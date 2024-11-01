@@ -3,6 +3,7 @@ A simple Flask application for a user with level and XP (experience points) syst
 """
 
 import math
+from typing import Union
 from flask import Flask, render_template, redirect, url_for, request
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.wrappers import Response
@@ -120,7 +121,7 @@ def index() -> str:  # get index page template
     """
     Return the index page containing a user.
     """
-    user: User | None = User.query.first()  # get first user
+    user: Union[User, None] = User.query.first()  # get first user
     # redirect to index page template
     return render_template("index.html", user=user)
 
@@ -130,7 +131,7 @@ def add_xp() -> Response:  # add XP
     """
     Add XP (experience points) based on entered amount.
     """
-    user: User | None = User.query.first()  # get first user
+    user: Union[User, None] = User.query.first()  # get first user
     user.add_xp(float(request.form["amount"]))  # parse amount as float
     db.session.commit()  # commit database changes
     return redirect(url_for("index"))  # redirect to index page template
