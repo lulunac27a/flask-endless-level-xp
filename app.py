@@ -72,7 +72,7 @@ class User(db.Model):  # user class
 
 @app.template_filter("short_numeric")  # short numeric filter
 def short_numeric_filter(
-    value: float,
+    value: Union[int, float]
 ) -> str:  # get number in short numeric form with abbreviations
     """
     Get the abbreviated numeric value.
