@@ -5,12 +5,14 @@ A simple Flask application for a user with level and XP (experience points) syst
 import math
 from typing import Union
 from flask import Flask, render_template, redirect, url_for, request
+from flask_migrate import Migrate, migrate
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.wrappers import Response
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 
 class User(db.Model):  # user class
