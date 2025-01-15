@@ -25,19 +25,24 @@ class User(db.Model):  # user class
     )  # user id
     username: str = db.Column(
         db.String(80), unique=True, nullable=False)  # username
-    xp: float = db.Column(db.Float, default=0, nullable=False)  # user XP
+    xp: float = db.Column(
+        db.Float, default=0, server_default="0", nullable=False
+    )  # user XP
     xp_required: float = db.Column(
-        db.Float, default=1, nullable=False
+        db.Float, default=1, server_default="1", nullable=False
     )  # user XP required
     total_xp: float = db.Column(
-        db.Float, default=0, nullable=False)  # user total XP
+        db.Float, default=0, server_default="0", nullable=False
+    )  # user total XP
     multiplier: int = db.Column(
-        db.Integer, default=1, nullable=False
+        db.Integer, default=1, server_default="1", nullable=False
     )  # user multiplier
     last_item_clicked: int = db.Column(
-        db.Integer, default=0, nullable=False
+        db.Integer, default=0, server_default="0", nullable=False
     )  # user last item clicked
-    level: int = db.Column(db.Integer, default=1, nullable=False)  # user level
+    level: int = db.Column(
+        db.Integer, default=1, server_default="1", nullable=False
+    )  # user level
 
     def add_xp(self, amount: float) -> None:  # add XP
         """
