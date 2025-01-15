@@ -44,6 +44,15 @@ class User(db.Model):  # user class
         Add XP (experience points) to the user.
         amount - the amount to add XP.
         """
+        if (
+            amount == self.last_item_clicked
+        ):  # check if amount is the same as last item clicked
+            self.multiplier += 1  # increase multiplier
+        else:
+            self.multiplier = (
+                1  # reset multiplier if amount is not the same as last item clicked
+            )
+        self.last_item_clicked = amount  # set last item clicked to amount
         self.xp += amount * self.multiplier  # add XP by amount
         self.total_xp += amount * self.multiplier  # add total XP by amount
         self.check_level_up()  # check if user has leveled up
