@@ -5,14 +5,14 @@ A simple Flask application for a user with level and XP (experience points) syst
 import math
 from typing import Union
 from flask import Flask, render_template, redirect, url_for, request
-from flask_migrate import Migrate, migrate
+from flask_migrate import Migrate as MigrateClass
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.wrappers import Response
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
 db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+migrate_instance = MigrateClass(app, db)
 
 
 class User(db.Model):  # user class
@@ -31,6 +31,12 @@ class User(db.Model):  # user class
     )  # user XP required
     total_xp: float = db.Column(
         db.Float, default=0, nullable=False)  # user total XP
+    multiplier: int = db.Column(
+        db.Integer, default=1, nullable=False
+    )  # user multiplier
+    last_item_clicked: int = db.Column(
+        db.Integer, default=0, nullable=False
+    )  # user last item clicked
     level: int = db.Column(db.Integer, default=1, nullable=False)  # user level
 
     def add_xp(self, amount: float) -> None:  # add XP
@@ -38,8 +44,8 @@ class User(db.Model):  # user class
         Add XP (experience points) to the user.
         amount - the amount to add XP.
         """
-        self.xp += amount  # add XP by amount
-        self.total_xp += amount  # add total XP by amount
+        self.xp += amount * self.multiplier  # add XP by amount
+        self.total_xp += amount * self.multiplier  # add total XP by amount
         self.check_level_up()  # check if user has leveled up
 
     def check_level_up(self) -> None:  # check if user has leveled up
