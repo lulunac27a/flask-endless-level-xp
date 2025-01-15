@@ -59,6 +59,15 @@
         <input type="hidden" name="amount" value="10" />
         <button type="submit">Add 10 XP</button>
       </form>
+      {% endif %} {% if user.level >= 15 %}<!--show if user has reached level 15-->
+      <form
+        action="{{ url_for('add_xp', user_id=user.id, amount=15) }}"
+        method="post"
+      >
+        <!--form to add XP-->
+        <input type="hidden" name="amount" value="15" />
+        <button type="submit">Add 15 XP</button>
+      </form>
       {% endif %} {% if user.level >= 20 %}<!--show if user has reached level 20-->
       <form
         action="{{ url_for('add_xp', user_id=user.id, amount=20) }}"
