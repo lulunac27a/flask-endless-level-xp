@@ -154,7 +154,8 @@ def add_xp() -> Response:  # add XP
     Add XP (experience points) based on entered amount.
     """
     user: Union[User, None] = User.query.first()  # get first user
-    user.add_xp(float(request.form["amount"]))  # parse amount as float
+    if user is not None:  # if user exists
+        user.add_xp(float(request.form["amount"]))  # parse amount as float
     db.session.commit()  # commit database changes
     return redirect(url_for("index"))  # redirect to index page template
 
