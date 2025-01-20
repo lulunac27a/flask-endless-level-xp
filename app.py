@@ -22,7 +22,7 @@ class User(db.Model):  # user class
 
     id: int = db.Column(
         db.Integer, primary_key=True, unique=True, nullable=False
-    )  # user id
+    )  # user ID
     username: str = db.Column(
         db.String(80), unique=True, nullable=False)  # username
     xp: float = db.Column(
