@@ -4,6 +4,7 @@ A simple Flask application for a user with level and XP (experience points) syst
 
 import math
 from typing import Union
+from datetime import datetime
 from flask import Flask, render_template, redirect, url_for, request
 from flask_migrate import Migrate as MigrateClass
 from flask_sqlalchemy import SQLAlchemy
@@ -43,12 +44,35 @@ class User(db.Model):  # user class
     level: int = db.Column(
         db.Integer, default=1, server_default="1", nullable=False
     )  # user level
+    last_time_clicked: datetime = db.Column(
+        db.DateTime,
+        default=datetime.utcnow(),
+        server_default="CURRENT_TIMESTAMP",
+        nullable=False,
+    )  # user last time clicked
+    time_multiplier: int = db.Column(
+        db.Integer, default=1, server_default="1", nullable=False
+    )  # user time multiplier
 
     def add_xp(self, amount: float) -> None:  # add XP
         """
         Add XP (experience points) to the user.
         amount - the amount to add XP.
         """
+        current_time = datetime.utcnow()  # get current time
+        time_difference = current_time - self.last_time_clicked  # get time difference
+        time_difference_seconds = (
+            time_difference.total_seconds()
+        )  # get time difference in seconds
+        if (
+            time_difference_seconds < 5
+        ):  # check if time difference is less than 5 seconds
+            self.time_multiplier += 1  # increase time multiplier
+        else:
+            self.time_multiplier = (
+                1  # reset time multiplier if time difference is more than 5 seconds
+            )
+        self.last_time_clicked = current_time  # set last time clicked to current time
         if (
             amount == self.last_item_clicked
         ):  # check if amount is the same as last item clicked
