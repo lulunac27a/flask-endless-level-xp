@@ -4,7 +4,7 @@ A simple Flask application for a user with level and XP (experience points) syst
 
 import math
 from typing import Union
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask import Flask, render_template, redirect, url_for, request
 from flask_migrate import Migrate as MigrateClass
 from flask_sqlalchemy import SQLAlchemy
@@ -59,9 +59,11 @@ class User(db.Model):  # user class
         Add XP (experience points) to the user.
         amount - the amount to add XP.
         """
-        current_time = datetime.utcnow()  # get current time
-        time_difference = current_time - self.last_time_clicked  # get time difference
-        time_difference_seconds = (
+        current_time: datetime = datetime.utcnow()  # get current time
+        time_difference: timedelta = (
+            current_time - self.last_time_clicked
+        )  # get time difference
+        time_difference_seconds: float = (
             time_difference.total_seconds()
         )  # get time difference in seconds
         if (
