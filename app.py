@@ -67,7 +67,7 @@ class User(db.Model):  # user class
             time_difference.total_seconds()
         )  # get time difference in seconds
         if (
-            time_difference_seconds < 5
+            abs(time_difference_seconds) < 5
         ):  # check if time difference is less than 5 seconds
             self.time_multiplier += 1  # increase time multiplier
         else:
