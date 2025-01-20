@@ -82,8 +82,10 @@ class User(db.Model):  # user class
                 1  # reset multiplier if amount is not the same as last item clicked
             )
         self.last_item_clicked = amount  # set last item clicked to amount
-        self.xp += amount * self.multiplier  # add XP by amount
-        self.total_xp += amount * self.multiplier  # add total XP by amount
+        self.xp += amount * self.multiplier * self.time_multiplier  # add XP by amount
+        self.total_xp += (
+            amount * self.multiplier * self.time_multiplier
+        )  # add total XP by amount
         self.check_level_up()  # check if user has leveled up
 
     def check_level_up(self) -> None:  # check if user has leveled up
