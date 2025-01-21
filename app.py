@@ -92,13 +92,13 @@ class User(db.Model):  # user class
             amount
             * self.multiplier
             * self.time_multiplier
-            * (1 + 5.0 / (abs(time_difference_seconds) + 1))
+            * (1 + 5.0 / (abs(time_difference_seconds) + 1.0))
         )  # add XP by amount
         self.total_xp += round(
             amount
             * self.multiplier
             * self.time_multiplier
-            * (1 + 5.0 / (abs(time_difference_seconds) + 1))
+            * (1 + 5.0 / (abs(time_difference_seconds) + 1.0))
         )  # add total XP by amount
         self.check_level_up()  # check if user has leveled up
 
