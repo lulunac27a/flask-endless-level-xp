@@ -61,8 +61,11 @@ class User(db.Model):  # user class
         amount - the amount to add XP.
         """
         current_time: datetime = datetime.now(timezone.utc)  # get current time
+        last_time_clicked_aware: datetime = self.last_time_clicked.replace(
+            tzinfo=timezone.utc
+        )  # set timezone to UTC
         time_difference: timedelta = (
-            current_time - self.last_time_clicked
+            current_time - last_time_clicked_aware
         )  # get time difference
         time_difference_seconds: float = (
             time_difference.total_seconds()
