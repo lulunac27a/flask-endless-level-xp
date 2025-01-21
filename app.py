@@ -8,6 +8,7 @@ from datetime import datetime, timedelta, timezone
 from flask import Flask, render_template, redirect, url_for, request
 from flask_migrate import Migrate as MigrateClass
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import func
 from werkzeug.wrappers import Response
 
 app = Flask(__name__)
@@ -47,7 +48,7 @@ class User(db.Model):  # user class
     last_time_clicked: datetime = db.Column(
         db.DateTime,
         default=datetime.now(timezone.utc),
-        server_default="CURRENT_TIMESTAMP",
+        server_default=func.current_timestamp(),
         nullable=False,
     )  # user last time clicked
     time_multiplier: int = db.Column(
