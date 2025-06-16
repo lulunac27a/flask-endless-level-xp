@@ -1,5 +1,5 @@
 * {
-    font-family: system-ui,  Arial, Helvetica, sans-serif;
+    font-family: system-ui, Arial, Helvetica, sans-serif;
     line-height: 125%;
 }
 progress {
@@ -14,10 +14,10 @@ progress {
     width: 100%;
     max-width: 300px;
 }
-.progress-bar{
+.progress-bar {
     width: 100%;
 }
-.progress-text{
+.progress-text {
     position: absolute;
     width: 100%;
     text-align: center;
